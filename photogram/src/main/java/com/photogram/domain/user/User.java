@@ -8,10 +8,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 //JPA -Java Persistence API(자바로 데이터를 영구적으로 저장(DB)할 수 있는 API제공)
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -29,7 +31,7 @@ public class User {
 	private String email; 
 	private String phone; 
 	private String gender; 
-	private String profileImageURl; //이미지
+	private String profileImageURl; //유저사진
 	private String role;//권한 
 	private LocalDateTime createDate; 
 	
