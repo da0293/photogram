@@ -3,7 +3,7 @@ package com.photogram.web;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.photogram.domain.User;
+import com.photogram.domain.user.User;
 
 @RestController
 public class HttpResponseJsonController {

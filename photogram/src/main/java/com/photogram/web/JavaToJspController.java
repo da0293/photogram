@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.photogram.domain.User;
+import com.photogram.domain.user.User;
 
 @Controller
 public class JavaToJspController {

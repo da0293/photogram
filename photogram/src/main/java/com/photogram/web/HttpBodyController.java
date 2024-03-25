@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.photogram.domain.User;
+import com.photogram.domain.user.User;
 
 @RestController
 public class HttpBodyController {
