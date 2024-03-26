@@ -1,8 +1,13 @@
 package com.photogram.web;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -10,6 +15,7 @@ import com.photogram.domain.user.User;
 import com.photogram.service.AuthService;
 import com.photogram.web.dto.auth.SignupDto;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor // DI 
@@ -35,13 +41,21 @@ public class AuthController {
 		return "auth/signup"; 
 	}
 	
-	// 회원가입 성공시 
-	/* tooEntity(): SignupDto 객체의 필드 값을 읽어와서, 해당 정보를 사용하여 User 엔티티 객체를 생성
-	 * DTO에는 비즈니스 로직이나 영속성과 관련된 정보가 없으며, 단순 데이터 전송을 위한 용도
-	 * 엔티티를 생성하기 위해서는 DTO에서 필요한 데이터를 추출하여 엔티티 객체의 필드에 설정해주는 작업이 필요
-	 */
+
 	@PostMapping("/auth/signup")
-	public String signup(SignupDto signupDto) { //key=value(x-www-form-urlencoded)로 데이터받음
+	public String signup(@Valid SignupDto signupDto, BindingResult bindingResult) { //key=value(x-www-form-urlencoded)로 데이터받음
+//		if(signupDto.getUsername().length()>20) {
+//			System.out.println("너 길이 초과했어");
+//		} 이것을 아래와 같이 바꾼다.
+		if(bindingResult.hasErrors()) {
+			Map<String, String> errorMap = new HashMap<>();
+			
+			for(FieldError error : bindingResult.getFieldErrors()) {
+				errorMap.put(error.getField(), error.getDefaultMessage());
+				System.out.println("=======================================");
+				System.out.println(error.getDefaultMessage());
+			}
+		}
 		log.info(signupDto.toString());
 		User user = signupDto.toEntity(); 
 		log.info(user.toString()); 

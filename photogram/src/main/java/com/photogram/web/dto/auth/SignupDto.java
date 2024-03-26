@@ -2,6 +2,8 @@ package com.photogram.web.dto.auth;
 
 import com.photogram.domain.user.User;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 /*
@@ -10,9 +12,13 @@ import lombok.Data;
 
 @Data // getter,setter 포함 
 public class SignupDto {
+	@Max(20)//validation 어노테이션 
 	private String username;
+	@NotBlank
 	private String password; 
+	@NotBlank
 	private String email;
+	@NotBlank
 	private String name; 
 	
 	public User toEntity() {
