@@ -4,6 +4,7 @@ import com.photogram.domain.user.User;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /*
@@ -12,7 +13,8 @@ import lombok.Data;
 
 @Data // getter,setter 포함 
 public class SignupDto {
-	@Max(20)//validation 어노테이션 
+	@Size(max = 20)//validation 어노테이션 
+	@NotBlank
 	private String username;
 	@NotBlank
 	private String password; 
