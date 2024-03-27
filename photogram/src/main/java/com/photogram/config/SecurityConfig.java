@@ -19,10 +19,14 @@ public class SecurityConfig {
 		
 		http.csrf(c -> c.disable());
 		http.authorizeHttpRequests(authorize -> authorize
+				// 인증이 필요한 페이지
 				.requestMatchers("/", "/user/**", "/image/**", "/subscribe/**", "/comment/**", "/api/**")
 				.authenticated().anyRequest().permitAll());
 		
-		http.formLogin(form -> form.loginPage("/auth/signin").loginProcessingUrl("/auth/signin").defaultSuccessUrl("/"));
+		http.formLogin(form -> form
+				.loginPage("/auth/signin") // GET
+				.loginProcessingUrl("/auth/signin") // POST -> 스프링 시큐리티가 로그인 프로세스 진행 
+				.defaultSuccessUrl("/"));
 
 		return http.build();
 		
