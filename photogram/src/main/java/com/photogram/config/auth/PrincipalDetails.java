@@ -25,39 +25,43 @@ public class PrincipalDetails implements UserDetails {
 	// Collection타입인 이유: 권한이 1개가 아니라 여러개일 수 있기 때문 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// 사용자의 권한 정보 반환
 		Collection<GrantedAuthority> collector = new ArrayList<>(); 
 		collector.add(()-> {return user.getRole();});
-		return null;
+		return collector;
 	}
 
+	// 사용자의 암호 반환
 	@Override
 	public String getPassword() {
 		return user.getPassword();
 	}
 
+	// 사용자의 이름 반환
 	@Override
 	public String getUsername() {
 		return user.getUsername();
 	}
 
-	
+	// 사용자 계정이 만료되지 않았는지 여부 반환
 	@Override
 	public boolean isAccountNonExpired() {
 		return true; 
 	}
 
-	// 해당 계정이 잠겼는가
+	// 사용자 계정이 잠겼는지 여부 반환
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 
-	// 
+	// 사용자의 인증 정보가 만료되지 않았는지 여부 반환 
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
+	// 사용자 계정이 활성화되었는지 여부 반환
 	@Override
 	public boolean isEnabled() {
 		return true; 
