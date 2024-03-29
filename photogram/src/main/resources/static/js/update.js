@@ -14,7 +14,14 @@ function update(userId, event) {
         console.log("update 성공", res);
        	location.href ="/user/"+ userId;
     }).fail(error => { //HtttpStatus 상태코드 200번대가 아닐 때 
-    	// 자바스크립트를 JSON으로 변경
-    	alert(JSON.stringify(error.responseJSON.data));
+   		console.log(error); 
+   		if(error.data==null){
+			alert(error.responseJSON.message);
+		} else {
+			// 자바스크립트를 JSON으로 변경
+    		alert(JSON.stringify(error.responseJSON.data));
+		}
+		  
+    	
     });
 }

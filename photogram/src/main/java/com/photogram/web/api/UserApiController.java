@@ -34,17 +34,30 @@ public class UserApiController {
 			@AuthenticationPrincipal PrincipalDetails principalDetails){
 		
 		if(bindingResult.hasErrors()) {
-			Map<String, String> errorMap = new HashMap<>();
-			
-			for(FieldError error : bindingResult.getFieldErrors()) {
-				errorMap.put(error.getField(), error.getDefaultMessage());
-			}
-			throw new CustomValidationApiException("유효성검사 실패함", errorMap); 
+		    // 유효성 검사 에러가 발생한 경우
+			// 유효성 검사 에러를 담기 위한 'errorMap'생성
+		    Map<String, String> errorMap = new HashMap<>();
+		    
+		    // 각 필드에 대한 에러를 errorMap에 저장
+		    // bindingResult객체가 발생한 모든 에러를 순회하면서 각 필드에 대한 에러 정보 추출
+		    for(FieldError error : bindingResult.getFieldErrors()) {
+		        errorMap.put(error.getField(), error.getDefaultMessage());
+		    }
+		    
+		    // 유효성 검사 실패 예외를 발생시킴
+		    throw new CustomValidationApiException("유효성검사 실패함", errorMap); 
 		} else {
-			User userEntity = userService.회원수정(id, userUpdateDto.toEntity());
-			principalDetails.setUser(userEntity);// 세션정보 변경
-			return new CMRespDto<>(1,"회원수정완료", userEntity); 
+		    // 유효성 검사 통과한 경우
+		    // 회원 정보 수정 요청 처리
+		    User userEntity = userService.회원수정(id, userUpdateDto.toEntity());
+		    
+		    // 수정된 회원 정보를 세션에 반영
+		    principalDetails.setUser(userEntity);
+		    
+		    // 성공 응답 반환
+		    return new CMRespDto<>(1,"회원수정완료", userEntity); 
 		}
+
 		
 		
 	}

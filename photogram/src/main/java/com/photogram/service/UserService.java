@@ -1,10 +1,13 @@
 package com.photogram.service;
 
+import java.util.function.Supplier;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.photogram.domain.user.User;
 import com.photogram.domain.user.UserRepository;
+import com.photogram.handler.ex.CustomValidationApiException;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +24,9 @@ public class UserService {
 		// 1. 영속화
 		// (1) get(): 무조건 찾았다.걱정마
 		// (2) orElseThrow(): 못찾았으니 exception 발동 
-		User userEntity = userRepository.findById(id).get();
+		User userEntity = userRepository.findById(id)
+			    .orElseThrow(() -> new CustomValidationApiException("찾을 수 없는 id입니다."));
+
 		
 		// 2. 영속화된 오브젝트 수정
 		userEntity.setName(user.getName());
