@@ -1,5 +1,6 @@
 // (1) 회원정보 수정
 function update(userId, event) {
+	event.preventDefault(); //폼태그 액션막기
     let data = $("#profileUpdate").serialize(); 
     console.log(data);
     // 데이터를 응답해줘야한다.
@@ -9,10 +10,11 @@ function update(userId, event) {
         data: data,
         contentType: "application/x-www-form-urlencoded; charset=utf-8", // contentType의 오타 수정
         dataType: "json"
-    }).done(res => {
-        console.log("update 성공");
+    }).done(res => { //HtttpStatus 상태코드 200번대
+        console.log("update 성공", res);
        	location.href ="/user/"+ userId;
-    }).fail(error => {
-        console.log("update 실패");
+    }).fail(error => { //HtttpStatus 상태코드 200번대가 아닐 때 
+    	// 자바스크립트를 JSON으로 변경
+    	alert(JSON.stringify(error.responseJSON.data));
     });
 }

@@ -1,11 +1,12 @@
 package com.photogram.handler;
 
-import java.util.Map;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.photogram.handler.ex.CustomValidationApiException;
 import com.photogram.handler.ex.CustomValidationException;
 import com.photogram.util.Script;
 import com.photogram.web.dto.CMRespDto;
@@ -18,8 +19,16 @@ public class ControllerExceptionHandler {
 	// 2. Ajax통신 - CMRespDto
 	// 3. Android통신 -CMREspDto 
 	// 2, 3은 개발자가 응답받을 때는 코드로 받는것이 좋다. 
+	
+	// 자바스크립트 리턴
 	@ExceptionHandler(CustomValidationException.class)
 	public String validataionException(CustomValidationException e) {
 		return Script.back(e.getErrorMap().toString()); 
+	}
+	
+	// 데이터 리턴 (Ajax를 통해 응답할때)
+	@ExceptionHandler(CustomValidationApiException.class)
+	public ResponseEntity<?> validataionApiException(CustomValidationApiException e) {
+		return new ResponseEntity<>(new CMRespDto<>(-1, e.getMessage(),e.getErrorMap()),HttpStatus.BAD_REQUEST);
 	}
 }
