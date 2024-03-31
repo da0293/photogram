@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.photogram.handler.ex.CustomApiException;
 import com.photogram.handler.ex.CustomValidationApiException;
 import com.photogram.handler.ex.CustomValidationException;
 import com.photogram.util.Script;
@@ -29,8 +30,11 @@ public class ControllerExceptionHandler {
 	// 데이터 리턴 (Ajax를 통해 응답할때)
 	@ExceptionHandler(CustomValidationApiException.class)
 	public ResponseEntity<?> validataionApiException(CustomValidationApiException e) {
-		System.out.println("========================================= 나 실행됨");
-		
 		return new ResponseEntity<>(new CMRespDto<>(-1, e.getMessage(),e.getErrorMap()),HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(CustomApiException.class)
+	public ResponseEntity<?> apiException(CustomApiException e) {
+		return new ResponseEntity<>(new CMRespDto<>(-1, e.getMessage(),null),HttpStatus.BAD_REQUEST);
 	}
 }
