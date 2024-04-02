@@ -2,7 +2,7 @@ package com.photogram.service;
 
 import org.springframework.stereotype.Service;
 
-import com.photogram.domain.user.SubscribeRepository;
+import com.photogram.domain.subscribe.SubscribeRepository;
 import com.photogram.handler.ex.CustomApiException;
 
 import jakarta.transaction.Transactional;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.photogram.config.auth.PrincipalDetails;
-import com.photogram.domain.user.Subscribe;
+import com.photogram.domain.subscribe.Subscribe;
 import com.photogram.service.SubscribeService;
 import com.photogram.web.dto.CMRespDto;
 
