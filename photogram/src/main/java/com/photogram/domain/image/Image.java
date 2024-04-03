@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import com.photogram.domain.user.User;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,7 +37,7 @@ public class Image {
 	private String postImageUrl; // 사진을 전송받아서 그 사진을 서버에 특정폴더에 저장 - DB에 그 저장된 경로를 insert
 	
 	@JoinColumn(name="userId")
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER) // 이미지를 select하면 조인해서 User정보를 가이 들고 옴
 	private User user; // 누가 업로드했는가. 
 	// 데이터 베이스를 저장할 때 User와같은 오브젝트를 저장할 수 없다. 
 	// 그래서 이대로 저장하게되면 DB에 foreign키로 저장하게된다. 

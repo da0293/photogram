@@ -3,6 +3,7 @@ package com.photogram.domain.user;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.photogram.domain.image.Image;
 
 import jakarta.persistence.Column;
@@ -55,6 +56,7 @@ public class User {
 	// -> 대신 getImages() 함수의 image들이 호출될 때 가져와!
 	// Eager = User를 Select할 때 해당 User id로 등록된 image들을 전부 Join해서 가져와!!
 	@OneToMany(mappedBy="user", fetch = FetchType.LAZY)  
+	@JsonIgnoreProperties({"user"}) 
 	private List<Image> images; // 양방향 매핑 
 
 	

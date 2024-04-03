@@ -35,11 +35,11 @@ public class UserController {
 			@AuthenticationPrincipal PrincipalDetails principalDetails, 
 			Model model) {
 		// 추천
-		System.out.println("세션정보: " + principalDetails.getUser());
+		// System.out.println("세션정보: " + principalDetails.getUser());
 		// 극혐 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication(); 
 		PrincipalDetails mPrincipalDetails = (PrincipalDetails)auth.getPrincipal();
-		System.out.println("직접 찾은 세션정보: "+mPrincipalDetails.getUser());
+		// System.out.println("직접 찾은 세션정보: "+mPrincipalDetails.getUser());
 		model.addAttribute("principal", principalDetails.getUser());
 		return "user/update";
 	}

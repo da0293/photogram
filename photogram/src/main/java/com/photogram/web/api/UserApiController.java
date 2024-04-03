@@ -1,6 +1,7 @@
 package com.photogram.web.api;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,13 +11,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.photogram.config.auth.PrincipalDetails;
+import com.photogram.domain.image.Image;
 import com.photogram.domain.user.User;
 import com.photogram.handler.ex.CustomValidationApiException;
 import com.photogram.service.UserService;
 import com.photogram.web.dto.CMRespDto;
 import com.photogram.web.dto.user.UserUpdateDto;
 
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -55,6 +60,14 @@ public class UserApiController {
 		    principalDetails.setUser(userEntity);
 		    
 		    // 성공 응답 반환
+		    // java.lang.IllegalStateException:Cannot call sendError() after the response has been committed
+		    // 에러 이유: 응답시에 userEntity의 모든 getter함수가 호출되고 json으로 파싱하여 응답한다.
+		    // User엔 List<Image> images가 있다. getImages()호출되면
+		    // Image의 User가 호출 -> 이 과정이 순환된다.(무한참조)
+		    // 무한참조 해결:@JsonIgnoreProperties({"user"}) 사용해 Image내부에 있는 user를 무시해라
+		    // @OneToMany(mappedBy="user", fetch = FetchType.LAZY)  
+			// @JsonIgnoreProperties({"user"}) 
+			// private List<Image> images
 		    return new CMRespDto<>(1,"회원수정완료", userEntity); 
 		}
 
