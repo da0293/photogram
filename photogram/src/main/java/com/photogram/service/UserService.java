@@ -1,12 +1,11 @@
 package com.photogram.service;
 
-import java.util.function.Supplier;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.photogram.domain.user.User;
 import com.photogram.domain.user.UserRepository;
+import com.photogram.handler.ex.CustomException;
 import com.photogram.handler.ex.CustomValidationApiException;
 
 import jakarta.transaction.Transactional;
@@ -18,6 +17,18 @@ public class UserService {
 
 	private final UserRepository userRepository; 
 	private final BCryptPasswordEncoder bCryptPasswordEncoder; 
+	
+	public User 회원프로필(int userId) {
+		// 해당 유저가 들고 있는 모든 사진을 가져옴
+		// SELECT * FROM image WHERE userId =:userId; -> JPA이용
+		// 만약 userId가 없다면 exception발생
+		User userEntity = userRepository.findById(userId).orElseThrow(()-> {
+			throw new CustomException("해당 프로필 페이지는 없는 페이지입니다.");
+		});
+		
+		
+		return userEntity; 
+	}
 	
 	@Transactional
 	public User 회원수정(int id,User user) {

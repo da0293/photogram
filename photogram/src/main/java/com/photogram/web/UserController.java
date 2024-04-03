@@ -9,12 +9,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.photogram.config.auth.PrincipalDetails;
+import com.photogram.domain.user.User;
+import com.photogram.service.UserService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Controller
 public class UserController {
 	
+	private final UserService userService; 
+	
+	
 	@GetMapping("/user/{id}")
-	public String profile(@PathVariable int id) {
+	public String profile(@PathVariable int id, Model model) {
+		User userEntity = userService.회원프로필(id); // 해당 아이디가 없다면 exception발생 
+		model.addAttribute("user", userEntity);
 		return "user/profile";
 	}
 	
