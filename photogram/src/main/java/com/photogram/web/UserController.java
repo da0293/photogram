@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.photogram.config.auth.PrincipalDetails;
-import com.photogram.domain.user.User;
 import com.photogram.service.UserService;
+import com.photogram.web.dto.user.UserProfileDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,10 +21,10 @@ public class UserController {
 	private final UserService userService; 
 	
 	
-	@GetMapping("/user/{id}")
-	public String profile(@PathVariable int id, Model model) {
-		User userEntity = userService.회원프로필(id); // 해당 아이디가 없다면 exception발생 
-		model.addAttribute("user", userEntity);
+	@GetMapping("/user/{pageUserId}")
+	public String profile(@PathVariable int pageUserId, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+		UserProfileDto dto = userService.회원프로필(pageUserId, principalDetails.getUser().getId()); // 해당 아이디가 없다면 exception발생 
+		model.addAttribute("dto", dto);
 		return "user/profile";
 	}
 	

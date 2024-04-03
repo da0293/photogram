@@ -1,11 +1,11 @@
 package com.photogram.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.photogram.domain.subscribe.SubscribeRepository;
 import com.photogram.handler.ex.CustomApiException;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
