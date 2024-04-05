@@ -4,6 +4,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.photogram.domain.subscribe.SubscribeRepository;
 import com.photogram.domain.user.User;
 import com.photogram.domain.user.UserRepository;
 import com.photogram.handler.ex.CustomException;
@@ -18,6 +19,7 @@ public class UserService {
 
 	private final UserRepository userRepository; 
 	private final BCryptPasswordEncoder bCryptPasswordEncoder; 
+	private final SubscribeRepository subscribeRepository;
 	
 	@Transactional(readOnly = true)
 	public UserProfileDto 회원프로필(int pageUserId, int principallId) {
@@ -32,8 +34,14 @@ public class UserService {
 		
 		dto.setUser(userEntity);
 		dto.setPageOwnerState(pageUserId == principallId); 
-		if((dto.isPageOwnerState())) System.out.println(">>>>>>>>>>> 아이디 같음");
-		else System.out.println(">>>>>>>>>>>>>>.다름");
+		dto.setImageCount(userEntity.getImages().size());
+		
+		int subscribeState = subscribeRepository.mSubscirbeState(principallId, pageUserId);
+		int subscribeCount = subscribeRepository.mSubscirbeCount(pageUserId);
+		
+		// subscribeState가 1이면 true; 
+		dto.setSubscribeState(subscribeState==1);
+		dto.setSubscribeCount(subscribeCount);
 		
 		return dto; 
 	}
