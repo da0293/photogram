@@ -24,14 +24,18 @@ public class SubscribeApiController {
 	// 누군가를 구독
 	@PostMapping("/api/subscribe/{toUserId}")
 	public ResponseEntity<?> subscirbe(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable int toUserId){
+		System.out.println(">>>>>>>>>>>>>>>여기1");
 		subscribeService.구독하기(principalDetails.getUser().getId(), toUserId);
+		System.out.println(">>>>>>>>>>>>>>>여기2");
 		return new ResponseEntity<>(new CMRespDto<>(1, "구독하기", null), HttpStatus.OK); 
 	}
 	
 	// 누군가를 구독 취소
 	@DeleteMapping("/api/subscribe/{toUserId}")
 	public ResponseEntity<?> unSubscribe(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable int toUserId){
+		System.out.println(">>>>>>>>>>>>>>>여기3");
 		subscribeService.구독취소하기(principalDetails.getUser().getId(), toUserId);
+		System.out.println(">>>>>>>>>>>>>>>여기4");
 		return new ResponseEntity<>(new CMRespDto<>(1, "구독취소하기", null), HttpStatus.OK);
 	}
 

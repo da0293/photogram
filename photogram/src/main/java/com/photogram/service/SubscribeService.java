@@ -29,6 +29,6 @@ public class SubscribeService {
 
 	@Transactional
 	public void 구독취소하기(int fromUserId, int toUserId) {
-		subscribeRepository.mSubscribe(fromUserId, toUserId);
+		subscribeRepository.mUnSubscribe(fromUserId, toUserId);
 	}
 }
